@@ -30,7 +30,6 @@ import com.badlogic.gdx.audio.Sound;
 public class Gravity implements Screen, InputProcessor {
     Sound Sound;
     World world;
-    Body player;
     BodyDef bdef;
     FixtureDef fdef;
     Sprite[] spBird = new Sprite[4];
@@ -42,6 +41,8 @@ public class Gravity implements Screen, InputProcessor {
     Animation aPlayer;
     SpriteBatch batch;
     Body floor;
+    Body ceiling;
+    Body player;
     Texture bg;
 
 
@@ -56,7 +57,7 @@ public class Gravity implements Screen, InputProcessor {
             spBird[i] = new Sprite(taBird.findRegion("frame_" + i));
         }
 
-            world = new World(new Vector2(0, -150f), true);
+            world = new World(new Vector2(0, -98f), true);
             world.setContactListener(new ContactListener() {
                 @Override
                 public void beginContact(Contact contact) {
@@ -109,14 +110,14 @@ public class Gravity implements Screen, InputProcessor {
 
         bdef.position.set(0,750);
         bdef.type = BodyDef.BodyType.StaticBody;
-        floor = world.createBody(bdef);
+        ceiling = world.createBody(bdef);
 
         shape.setAsBox(Gdx.graphics.getWidth(), 1);
         fdef = new FixtureDef();
         fdef.shape = shape;
-        floor.setSleepingAllowed(false);
-        floor.createFixture(fdef);
-        floor.setGravityScale(0);
+        ceiling.setSleepingAllowed(false);
+        ceiling.createFixture(fdef);
+        ceiling.setGravityScale(0);
     }
 
     private void createFloor() {
@@ -193,7 +194,7 @@ public class Gravity implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         world.step(1 / 60f, 6, 2);
         b2dr.render(world, camera.combined);
-        batch.draw(bg, 0, 0, MyGdxGame.WIDTH, MyGdxGame.HEIGHT);
+        //batch.draw(bg, 0, 0, MyGdxGame.WIDTH, MyGdxGame.HEIGHT);
         batch.begin();
         batch.draw(aPlayer.getKeyFrame(elapsedTime, true), player.getPosition().x, player.getPosition().y - spBird[0].getHeight() / 2);
         if(Gdx.input.justTouched())
