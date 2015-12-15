@@ -193,7 +193,7 @@ public class Gravity implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         world.step(1 / 60f, 6, 2);
         b2dr.render(world, camera.combined);
-        batch.draw(bg, 0, 0, MyGdxGame.WIDTH, MyGdxGame.HEIGHT); //fucking kill me please
+        batch.draw(bg, 0, 0, MyGdxGame.WIDTH, MyGdxGame.HEIGHT);
         batch.begin();
         batch.draw(aPlayer.getKeyFrame(elapsedTime, true), player.getPosition().x, player.getPosition().y - spBird[0].getHeight() / 2);
         if(Gdx.input.justTouched())
